@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Степінь числа</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #dff0fa, #ffffff);
+      color: #333;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: #B3E5FC;
+      opacity: 0.35;
+      z-index: -1;
+    }
+    .circle.one    { width: 160px; height: 160px; top: 30px; left: 60px; }
+    .circle.two    { width: 100px; height: 100px; bottom: 80px; right: 40px; }
+    .circle.three  { width: 140px; height: 140px; bottom: 200px; left: -50px; }
+    .circle.four   { width: 220px; height: 220px; top: 100px; right: -80px; }
+    .circle.five   { width: 120px; height: 120px; bottom: 300px; right: 120px; }
+    .container {
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+      max-width: 520px;
+      text-align: center;
+      margin: 100px auto;
+    }
+    h1 {
+      color: #3D7C98;
+      margin-bottom: 25px;
+      font-size: 32px;
+    }
+    .inputs {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    input[type="number"] {
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #73B0CD;
+      border-radius: 10px;
+      width: 45%;
+      text-align: center;
+    }
+    button {
+      padding: 14px 30px;
+      font-size: 18px;
+      border: none;
+      background-color: #3D7C98;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.4s ease;
+    }
+    button:hover {
+      background-color: #2f6076;
+      box-shadow: 0 0 15px rgba(61,124,152,0.3);
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 20px;
+      background: #E3F6FA;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(61,124,152,0.12);
+    }
+  </style>
+</head>
+<body>
+<div class="circle one"></div>
+<div class="circle two"></div>
+<div class="circle three"></div>
+<div class="circle four"></div>
+<div class="circle five"></div>
+<div class="container">
+  <h1>Обчислення степеня</h1>
+  <div class="inputs">
+    <input type="number" id="base" placeholder="Число x">
+    <input type="number" id="power" placeholder="Степінь n">
+  </div>
+  <button onclick="calcPower()">Обчислити</button>
+  <div id="response" class="result"></div>
+</div>
+<script>
+  function grade(x, n) {
+    let result = 1;
+    let steps = `${x}`;
+    for (let i = 1; i < n; i++) {
+      result *= x;
+      steps += ` × ${x}`;
+    }
+    result *= x;
+    return { value: result, text: steps };
+  }
+  function calcPower() {
+    const x = +document.getElementById("base").value;
+    const n = +document.getElementById("power").value;
+    const response = document.getElementById("response");
+    if (isNaN(x) || isNaN(n)) {
+      response.innerHTML = "Введіть обидва числа!";
+      return;
+    }
+    if (n < 1) {
+      response.innerHTML = "Степінь n має бути більше або дорівнювати 1!";
+      return;
+    }
+    const resultObj = grade(x, n);
+    response.innerHTML = `Результат: ${x}<sup>${n}</sup> = ${resultObj.text} = ${resultObj.value}`;
+  }
+</script>
+</body>
+</html>

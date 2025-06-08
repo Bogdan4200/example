@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Перевірка віку</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #dff0fa, #ffffff);
+      color: #333;
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: #B3E5FC;
+      opacity: 0.35;
+      z-index: -1;
+    }
+
+    .circle.one { width: 160px; height: 160px; top: 30px; left: 60px; }
+    .circle.two { width: 100px; height: 100px; bottom: 80px; right: 40px; }
+    .circle.three { width: 140px; height: 140px; bottom: 200px; left: -50px; }
+    .circle.four { width: 220px; height: 220px; top: 100px; right: -80px; }
+    .circle.five { width: 120px; height: 120px; bottom: 300px; right: 120px; }
+
+    .container {
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h2 {
+      color: #3D7C98;
+      margin-bottom: 25px;
+      font-size: 26px;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #74C0FC;
+      border-radius: 10px;
+      width: 80%;
+      background: #e6f4ff;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #3D7C98;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #2f6076;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .secret-content {
+      margin-top: 20px;
+      font-size: 20px;
+      background: #E3F6FA;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(61,124,152,0.12);
+    }
+  </style>
+</head>
+<body>
+  <div class="circle one"></div>
+  <div class="circle two"></div>
+  <div class="circle three"></div>
+  <div class="circle four"></div>
+  <div class="circle five"></div>
+
+  <div class="container">
+    <h2>Скільки тобі років?</h2>
+    <input type="number" id="ageInput" placeholder="Введи свій вік">
+    <br>
+    <button onclick="checkAge()">Перевірити</button>
+
+    <div id="message" class="message"></div>
+    <div id="secret" class="secret-content" style="display: none;">
+      <b>Тут могла бути ваша реклама.</b>
+    </div>
+  </div>
+
+  <script>
+    function checkAge() {
+      const age = +document.getElementById("ageInput").value;
+      const message = document.getElementById("message");
+      const secret = document.getElementById("secret");
+
+      if (isNaN(age) || age === 0) {
+        message.textContent = "Будь ласка, введи реальний вік.";
+        secret.style.display = "none";
+        return;
+      }
+
+      if (age < 18) {
+        message.textContent = "Вибач, доступ заборонено - тобі менше 18 років.";
+        secret.style.display = "none";
+      } else {
+        message.textContent = "Вік підтверджено.";
+        secret.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>

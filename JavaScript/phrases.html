@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор компліментів</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: cursive;
+      background: linear-gradient(to bottom, #dff0fa, #ffffff);
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: #B3E5FC;
+      opacity: 0.35;
+      z-index: -1;
+    }
+
+    .circle.one { width: 180px; height: 180px; top: 50px; left: 60px; }
+    .circle.two { width: 120px; height: 120px; bottom: 80px; right: 40px; }
+    .circle.three { width: 140px; height: 140px; bottom: 200px; left: -50px; }
+    .circle.four { width: 200px; height: 200px; top: 100px; right: -80px; }
+
+    .container {
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+      max-width: 600px;
+      text-align: center;
+      margin: 100px auto;
+    }
+
+    h1 {
+      color: #3D7C98;
+      margin-bottom: 25px;
+      font-size: 30px;
+    }
+
+    input[type="number"] {
+      padding: 12px;
+      font-size: 18px;
+      margin: 12px auto;
+      border: 2px solid #73B0CD;
+      border-radius: 10px;
+      width: 80%;
+      text-align: center;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      border: none;
+      background-color: #3D7C98;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.4s ease;
+    }
+
+    button:hover {
+      background-color: #2f6076;
+      box-shadow: 0 0 15px rgba(61,124,152,0.3);
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 20px;
+      background: #E3F6FA;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(61,124,152,0.12);
+      text-align: left;
+    }
+
+    .result p {
+      margin: 10px 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Кольорові кола -->
+<div class="circle one"></div>
+<div class="circle two"></div>
+<div class="circle three"></div>
+<div class="circle four"></div>
+
+<!-- Основний блок -->
+<div class="container">
+  <h1>Генератор компліментів</h1>
+  <input type="number" id="amountInput" min="1" max="50" placeholder="Скільки компліментів згенерувати?">
+  <button onclick="generateCompliments()">Згенерувати</button>
+  <div class="result" id="resultBox"></div>
+</div>
+
+<script>
+  function generateCompliments() {
+    const amount = +document.getElementById('amountInput').value;
+    const result = document.getElementById('resultBox');
+    result.innerHTML = '';
+
+    if (amount <= 0 || isNaN(amount)) {
+      result.innerHTML = '<p>Введіть додатне число!</p>';
+      return;
+    }
+
+    const compliments = ['handsome', 'good', 'wonderful', 'amazing', 'smart', 'kind', 'loving', 'strong', 'fast', 'lucky', 'popular', 'confident', 'big', 'unique'];
+    const animals = ['cat', 'dog', 'parrot', 'rabbit', 'squirrel', 'butterfly', 'mouse', 'cheetah', 'panda', 'kangaroo', 'pig', 'cow', 'deer', 'bear', 'wolf', 'duck', 'swan'];
+    const colors = ['red', 'green', 'lime', '#FF80FF', '#FF8080', '#FFC080', 'silver', '#00FF80', '#8080FF', '#80C0FF', 'gold', 'orange', '#FF80C0', '#80FF80', '#FFFF80', '#80FFFF'];
+
+    for (let i = 0; i < amount; i++) {
+      const randComp = Math.floor(Math.random() * compliments.length);
+      const randAnimal = Math.floor(Math.random() * animals.length);
+      const randColor = Math.floor(Math.random() * colors.length);
+
+      result.innerHTML += `<p style="color: ${colors[randColor]}">You are as <strong>${compliments[randComp]}</strong> as a <strong>${animals[randAnimal]}</strong>.</p>`;
+    }
+  }
+</script>
+
+</body>
+</html>

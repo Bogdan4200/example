@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дублювання фрази</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        overflow-x: hidden;
+        background: #F5F5F5;
+        color: #333;
+    }
+    .wave, .circle {
+        position: absolute;
+        border-radius: 50%;
+        z-index: -1;
+    }
+    .wave {
+        background: radial-gradient(circle, #58A4B0 20%, transparent 80%);
+        opacity: 0.4;
+    }
+    .wave.one { width: 600px; height: 600px; top: -500px; left: -600px; }
+    .wave.two { width: 800px; height: 800px; top: 1000px; right: -700px; }
+    .wave.three { width: 400px; height: 400px; top: 300px; left: 800px; }
+
+    .circle {
+        background: #B3E5FC;
+        opacity: 0.3;
+    }
+    .circle.one { width: 220px; height: 220px; top: 700px; left: -80px; }
+    .circle.two { width: 150px; height: 150px; top: -50px; right: 200px; }
+    .circle.three { width: 180px; height: 180px; top: 1200px; right: 50px; }
+
+    .container {
+        background: #ffffff;
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        width: 400px;
+        text-align: center;
+        margin: 120px auto;
+        transition: all 0.4s ease;
+    }
+    h1 {
+        color: #3D7C98;
+        margin-bottom: 20px;
+        font-size: 26px;
+    }
+    input[type="text"], input[type="number"] {
+        padding: 12px;
+        font-size: 16px;
+        margin: 12px 8px;
+        border: 2px solid #73B0CD;
+        border-radius: 10px;
+        width: 80%;
+        transition: 0.3s;
+    }
+    input:focus {
+        border-color: #3D7C98;
+        outline: none;
+        box-shadow: 0 0 8px #A8DFF1;
+    }
+    button {
+        padding: 12px 30px;
+        font-size: 18px;
+        border: none;
+        background-color: #3D7C98;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: 0.3s ease;
+    }
+    button:hover {
+        background-color: #2f6076;
+        box-shadow: 0 0 15px rgba(61,124,152,0.3);
+    }
+    .result {
+        margin-top: 30px;
+        font-size: 22px;
+        background: #E3F6FA;
+        padding: 25px;
+        border-radius: 16px;
+        text-align: left;
+        display: none;
+    }
+    .result p {
+        margin: 14px 0;
+        font-size: 26px;
+        color: #3D7C98;
+        text-shadow: 0 3px 5px rgba(0,0,0,0.15);
+        font-weight: 600;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s forwards;
+    }
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="wave one"></div>
+<div class="wave two"></div>
+<div class="wave three"></div>
+
+<div class="circle one"></div>
+<div class="circle two"></div>
+<div class="circle three"></div>
+
+<div class="container" id="block">
+    <h1>Дублювання фрази</h1>
+    <input type="text" id="text" placeholder="Введи фразу">
+    <input type="number" id="count" placeholder="Кількість">
+    <br>
+    <button onclick="generate()">Створити</button>
+
+    <div id="output" class="result"></div>
+</div>
+
+<script>
+function generate() {
+    let text = document.getElementById('text').value;
+    let count = +document.getElementById('count').value;
+    let output = document.getElementById('output');
+
+    if (text === '' || count <= 0) {
+        alert('Заповни обидва поля правильно!');
+        return;
+    }
+
+    let result = '';
+    for (let i = 1; i <= count; i++) {
+        result += `<p style="animation-delay: ${i * 0.1}s">${i}. ${text}</p>`;
+    }
+
+    output.innerHTML = result;
+    output.style.display = 'block';
+    document.getElementById('block').style.marginBottom = '80px';
+
+    // Додавання нових кіл при кожному натисканні
+    for (let i = 0; i < 3; i++) {
+        let newCircle = document.createElement('div');
+        newCircle.classList.add('circle');
+        newCircle.style.width = `${100 + Math.random() * 200}px`;
+        newCircle.style.height = newCircle.style.width;
+        newCircle.style.top = `${window.scrollY + 600 + Math.random() * 500}px`;
+        newCircle.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+        document.body.appendChild(newCircle);
+    }
+}
+</script>
+
+</body>
+</html>

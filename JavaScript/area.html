@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Геометричні обчислення</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #dff0fa, #ffffff);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .wave, .circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .wave.one {
+      width: 400px;
+      height: 400px;
+      top: 50px;
+      left: -150px;
+      background: radial-gradient(circle, #3D7C98 20%, transparent 80%);
+    }
+
+    .wave.two {
+      width: 600px;
+      height: 600px;
+      top: 700px;
+      right: -250px;
+      background: radial-gradient(circle, #3D7C98 20%, transparent 80%);
+    }
+
+    .circle.one {
+      width: 100px;
+      height: 100px;
+      top: 200px;
+      right: 20px;
+      background: #B3E5FC;
+    }
+
+    .circle.two {
+      width: 120px;
+      height: 120px;
+      top: 900px;
+      left: 30px;
+      background: #B3E5FC;
+    }
+
+    .flex-row {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin: 100px 30px 60px;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+      width: 320px;
+      min-height: 440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      text-align: center;
+    }
+
+    h2 {
+      color: #3D7C98;
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    input, select {
+      padding: 10px;
+      font-size: 16px;
+      margin: 6px 0 12px;
+      border: 2px solid #73B0CD;
+      border-radius: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #3D7C98;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2f6076;
+      box-shadow: 0 0 10px rgba(61,124,152,0.25);
+    }
+
+    .result {
+      margin-top: 15px;
+      background: #E3F6FA;
+      padding: 14px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(61,124,152,0.1);
+      font-size: 16px;
+      flex-grow: 1;
+    }
+
+    @media (max-width: 1000px) {
+      .flex-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wave one"></div>
+  <div class="wave two"></div>
+  <div class="circle one"></div>
+  <div class="circle two"></div>
+
+  <div class="flex-row">
+    <!-- Прямокутник -->
+    <div class="container">
+      <h2>Прямокутник</h2>
+      <label>Довжина</label>
+      <input type="number" id="rect-length" />
+      <label>Ширина</label>
+      <input type="number" id="rect-width" />
+      <label>Одиниці вимірювання</label>
+      <select id="rect-unit">
+        <option value="см">см</option>
+        <option value="мм">мм</option>
+        <option value="м">м</option>
+        <option value="дм">дм</option>
+        <option value="км">км</option>
+      </select>
+      <button onclick="calcRectangle()">Обчислити</button>
+      <div id="rect-result" class="result"></div>
+    </div>
+
+    <!-- Трикутник -->
+    <div class="container">
+      <h2>Трикутник</h2>
+      <label>Сторона a</label>
+      <input type="number" id="tri-a" />
+      <label>Сторона b</label>
+      <input type="number" id="tri-b" />
+      <label>Сторона c</label>
+      <input type="number" id="tri-c" />
+      <label>Одиниці вимірювання</label>
+      <select id="tri-unit">
+        <option value="см">см</option>
+        <option value="мм">мм</option>
+        <option value="м">м</option>
+        <option value="дм">дм</option>
+        <option value="км">км</option>
+      </select>
+      <button onclick="calcTriangle()">Обчислити</button>
+      <div id="tri-result" class="result"></div>
+    </div>
+
+    <!-- Коло -->
+    <div class="container">
+      <h2>Коло</h2>
+      <label>Радіус</label>
+      <input type="number" id="circle-radius" />
+      <label>Одиниці вимірювання</label>
+      <select id="circle-unit">
+        <option value="см">см</option>
+        <option value="мм">мм</option>
+        <option value="м">м</option>
+        <option value="дм">дм</option>
+        <option value="км">км</option>
+      </select>
+      <button onclick="calcCircle()">Обчислити</button>
+      <div id="circle-result" class="result"></div>
+    </div>
+  </div>
+
+  <script>
+    function calcRectangle() {
+      const length = +document.getElementById("rect-length").value;
+      const width = +document.getElementById("rect-width").value;
+      const unit = document.getElementById("rect-unit").value;
+
+      const area = length * width;
+      const perimeter = 2 * (length + width);
+
+      document.getElementById("rect-result").innerHTML =
+        `Площа: <strong>${area}</strong> ${unit}<sup>2</sup><br>` +
+        `Периметр: <strong>${perimeter}</strong> ${unit}`;
+    }
+
+    function calcTriangle() {
+      const a = +document.getElementById("tri-a").value;
+      const b = +document.getElementById("tri-b").value;
+      const c = +document.getElementById("tri-c").value;
+      const unit = document.getElementById("tri-unit").value;
+
+      const p = (a + b + c) / 2;
+      const area = Math.sqrt(p * (p - a) * (p - b) * (p - c));
+      const perimeter = a + b + c;
+
+      if (isNaN(area) || area <= 0) {
+        document.getElementById("tri-result").innerHTML =
+          `На жаль, такого трикутника не існує.`;
+      } else {
+        document.getElementById("tri-result").innerHTML =
+          `Площа: <strong>${area.toFixed(2)}</strong> ${unit}<sup>2</sup><br>` +
+          `Периметр: <strong>${perimeter}</strong> ${unit}`;
+      }
+    }
+
+    function calcCircle() {
+      const r = +document.getElementById("circle-radius").value;
+      const unit = document.getElementById("circle-unit").value;
+      const pi = 3.1415;
+
+      const circumference = 2 * pi * r;
+      const area = pi * r * r;
+
+      document.getElementById("circle-result").innerHTML =
+        `Площа: <strong>${area.toFixed(2)}</strong> ${unit}<sup>2</sup><br>` +
+        `Довжина кола: <strong>${circumference.toFixed(2)}</strong> ${unit}`;
+    }
+  </script>
+</body>
+</html>

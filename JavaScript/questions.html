@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Вікторина</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #dff0fa, #ffffff);
+      color: #333;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: #B3E5FC;
+      opacity: 0.35;
+      z-index: -1;
+    }
+
+    .circle.one    { width: 160px; height: 160px; top: 30px; left: 60px; }
+    .circle.two    { width: 100px; height: 100px; bottom: 80px; right: 40px; }
+    .circle.three  { width: 140px; height: 140px; bottom: 200px; left: -50px; }
+    .circle.four   { width: 220px; height: 220px; top: 100px; right: -80px; }
+    .circle.five   { width: 120px; height: 120px; bottom: 300px; right: 120px; }
+
+    .container {
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+      max-width: 600px;
+      text-align: center;
+      margin: 100px auto;
+    }
+
+    h1 {
+      color: #3D7C98;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .question-block {
+      margin-top: 40px;
+      padding: 25px;
+      border: 2px solid #73B0CD;
+      border-radius: 15px;
+      text-align: left;
+      background: #f9fdff;
+    }
+
+    .question-block p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .question-block input {
+      padding: 10px;
+      font-size: 16px;
+      width: 90%;
+      margin-bottom: 10px;
+      border: 2px solid #73B0CD;
+      border-radius: 8px;
+    }
+
+    .question-block button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3D7C98;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .question-block button:hover {
+      background-color: #2f6076;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .wrong {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Фонові елементи -->
+  <div class="circle one"></div>
+  <div class="circle two"></div>
+  <div class="circle three"></div>
+  <div class="circle four"></div>
+  <div class="circle five"></div>
+
+  <div class="container">
+    <h1>Вікторина</h1>
+    <div id="quizArea"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "В якому році був перший політ людини в космос?",
+        a: "1961",
+        tries: 3
+      },
+      {
+        q: "Хто головний персонаж гри Minecraft? (з великої букви англійською)",
+        a: "Steve",
+        tries: 3
+      },
+      {
+        q: "Чи можна їсти плоди картоплі?",
+        a: "ні",
+        tries: 1
+      },
+      {
+        q: "Продовжи закономірність:\n1, 2, 3, 4, 5, ...\n(Це не 6!)",
+        a: "6",
+        tries: 3
+      },
+      {
+        q: "В якому році був розроблений АК?",
+        a: "1947",
+        tries: 3
+      }
+    ];
+
+    let currentIndex = 0;
+
+    function addQuestion(index) {
+      const quizArea = document.getElementById('quizArea');
+      const block = document.createElement('div');
+      block.classList.add('question-block');
+
+      const p = document.createElement('p');
+      p.textContent = `${questions[index].q} (Спроб: ${questions[index].tries})`;
+
+      const input = document.createElement('input');
+      input.type = 'text';
+
+      const button = document.createElement('button');
+      button.textContent = 'Відповісти';
+
+      const feedback = document.createElement('div');
+      feedback.classList.add('feedback');
+
+      let tries = questions[index].tries;
+
+      button.onclick = () => {
+        const userAnswer = input.value.trim();
+        if (userAnswer === '') {
+          feedback.textContent = "Введи відповідь!";
+          feedback.className = "feedback wrong";
+          return;
+        }
+
+        if (userAnswer.toLowerCase() === questions[index].a.toLowerCase()) {
+          feedback.textContent = "Правильно!";
+          feedback.className = "feedback correct";
+          input.disabled = true;
+          button.disabled = true;
+          if (index + 1 < questions.length) {
+            addQuestion(index + 1);
+          }
+        } else {
+          tries--;
+          if (tries > 0) {
+            p.textContent = `${questions[index].q} (Спроб: ${tries})`;
+            feedback.textContent = "Неправильно. Спробуй ще.";
+            feedback.className = "feedback wrong";
+          } else {
+            feedback.innerHTML = `Усі спроби використано. Правильна відповідь: <strong>${questions[index].a}</strong>`;
+            feedback.className = "feedback wrong";
+            input.disabled = true;
+            button.disabled = true;
+            if (index + 1 < questions.length) {
+              addQuestion(index + 1);
+            }
+          }
+        }
+      };
+
+      block.appendChild(p);
+      block.appendChild(input);
+      block.appendChild(button);
+      block.appendChild(feedback);
+      quizArea.appendChild(block);
+    }
+
+    // Запуск першого питання
+    addQuestion(currentIndex);
+  </script>
+
+</body>
+</html>

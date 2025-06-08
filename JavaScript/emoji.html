@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Емоджі за кодами</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #dff0fa, #ffffff);
+      color: #333;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 60px;
+    }
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: #B3E5FC;
+      opacity: 0.35;
+      z-index: -1;
+    }
+    .circle.one { width: 160px; height: 160px; top: 30px; left: 60px; }
+    .circle.two { width: 100px; height: 100px; bottom: 80px; right: 40px; }
+    .circle.three { width: 140px; height: 140px; bottom: 200px; left: -50px; }
+
+    .container {
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h2 {
+      color: #3D7C98;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    .input-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .input-row input {
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #74C0FC;
+      border-radius: 10px;
+      width: 50%;
+      background: #e6f4ff;
+      text-align: center;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #3D7C98;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #2f6076;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 22px;
+      background: #E3F6FA;
+      padding: 15px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(61,124,152,0.12);
+      text-align: left;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="circle one"></div>
+  <div class="circle two"></div>
+  <div class="circle three"></div>
+
+  <div class="container">
+    <h2>Генератор емодзі за Unicode-кодом</h2>
+    <div class="input-row">
+      <input type="number" id="min" placeholder="Min">
+      <input type="number" id="max" placeholder="Max">
+    </div>
+    <button onclick="showEmojis()">Показати</button>
+    <div id="output" class="result"></div>
+  </div>
+
+  <script>
+    function showEmojis() {
+      const min = +document.getElementById("min").value;
+      const max = +document.getElementById("max").value;
+      const output = document.getElementById("output");
+
+      if (isNaN(min) || isNaN(max) || min > max) {
+        output.innerHTML = "Введіть правильний діапазон.";
+        return;
+      }
+
+      let result = "";
+      for (let i = min; i <= max; i++) {
+        result += `&#${i}; &amp;#${i};\n`;
+      }
+
+      output.innerHTML = result;
+    }
+  </script>
+</body>
+</html>

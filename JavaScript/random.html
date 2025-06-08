@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Генератор випадкових чисел</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        overflow-x: hidden;
+        background: linear-gradient(to bottom, #dff0fa, #ffffff);
+        color: #333;
+        position: relative;
+    }
+
+    .wave {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, #3D7C98 20%, transparent 80%);
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+    .wave.one { width: 800px; height: 800px; top: -300px; left: -400px; }
+    .wave.two { width: 700px; height: 700px; top: 500px; right: -350px; }
+
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        background: #B3E5FC;
+        opacity: 0.35;
+        z-index: -2;
+    }
+
+    .circle.one { width: 180px; height: 180px; top: 620px; left: -60px; }
+    .circle.two { width: 130px; height: 130px; top: 200px; right: -40px; }
+
+    .container {
+        background: #ffffff;
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        max-width: 520px;
+        text-align: center;
+        margin: 100px auto;
+    }
+
+    h1 {
+        color: #3D7C98;
+        margin-bottom: 25px;
+        font-size: 32px;
+    }
+
+    input[type="number"] {
+        padding: 12px;
+        font-size: 18px;
+        margin: 12px 8px;
+        border: 2px solid #73B0CD;
+        border-radius: 10px;
+        width: 100px;
+    }
+
+    button {
+        padding: 14px 30px;
+        font-size: 18px;
+        border: none;
+        background-color: #3D7C98;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 25px;
+        transition: 0.4s ease;
+    }
+
+    button:hover {
+        background-color: #2f6076;
+        box-shadow: 0 0 15px rgba(61,124,152,0.3);
+    }
+
+    .result {
+        margin-top: 30px;
+        font-size: 18px;
+        background: #E3F6FA;
+        padding: 25px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(61,124,152,0.12);
+    }
+
+    .solution-title {
+        font-size: 22px;
+        color: #3D7C98;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    @media only screen and (max-width: 800px) {
+        .container {
+            width: 90%;
+            margin: 50px auto;
+        }
+        input[type="number"] {
+            width: 80px;
+            margin: 10px 4px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="wave one"></div>
+<div class="wave two"></div>
+<div class="circle one"></div>
+<div class="circle two"></div>
+
+<div class="container">
+    <h1>Генератор випадкових чисел</h1>
+    <div>
+        <input type="number" id="min" placeholder="Мінімум">
+        <input type="number" id="max" placeholder="Максимум">
+        <input type="number" id="count" placeholder="Кількість">
+    </div>
+    <button onclick="generateNumbers()">Згенерувати</button>
+    <div id="output" class="result"></div>
+</div>
+
+<script>
+function generateNumbers() {
+    const min = parseInt(document.getElementById('min').value);
+    const max = parseInt(document.getElementById('max').value);
+    const count = parseInt(document.getElementById('count').value);
+    const output = document.getElementById('output');
+
+    if (isNaN(min) || isNaN(max) || isNaN(count) || min > max || count <= 0) {
+        output.innerHTML = "Будь ласка, введіть коректні значення!";
+        return;
+    }
+
+    let numbers = [];
+    for (let i = 0; i < count; i++) {
+        const num = Math.floor(Math.random() * (max - min + 1)) + min;
+        numbers.push(num);
+    }
+
+    output.innerHTML = `
+        <div class="solution-title">Згенеровані числа</div>
+        ${numbers.join(', ')}
+    `;
+}
+</script>
+
+</body>
+</html>

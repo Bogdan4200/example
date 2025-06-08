@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зарплати співробітників</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: cursive;
+      background: linear-gradient(to bottom, #dff0fa, #ffffff);
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: #B3E5FC;
+      opacity: 0.35;
+      z-index: -1;
+    }
+
+    .circle.one { width: 180px; height: 180px; top: 50px; left: 60px; }
+    .circle.two { width: 120px; height: 120px; bottom: 80px; right: 40px; }
+    .circle.three { width: 140px; height: 140px; bottom: 200px; left: -50px; }
+    .circle.four { width: 200px; height: 200px; top: 100px; right: -80px; }
+
+    .container {
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+      max-width: 600px;
+      text-align: center;
+      margin: 100px auto;
+    }
+
+    h1 {
+      color: #3D7C98;
+      margin-bottom: 20px;
+      font-size: 30px;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 16px;
+      margin: 10px;
+      border: 2px solid #73B0CD;
+      border-radius: 10px;
+      width: 80%;
+      text-align: center;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      border: none;
+      background-color: #3D7C98;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.4s ease;
+    }
+
+    button:hover {
+      background-color: #2f6076;
+      box-shadow: 0 0 15px rgba(61,124,152,0.3);
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 18px;
+      background: #E3F6FA;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(61,124,152,0.12);
+      text-align: left;
+    }
+
+    .result p {
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Фонові кола -->
+<div class="circle one"></div>
+<div class="circle two"></div>
+<div class="circle three"></div>
+<div class="circle four"></div>
+
+<!-- Основний контейнер -->
+<div class="container">
+  <h1>Зарплати співробітників</h1>
+
+  <input type="number" id="vasyl" placeholder="Зарплата Василя">
+  <input type="number" id="petro" placeholder="Зарплата Петра">
+  <input type="number" id="daryna" placeholder="Зарплата Дарини">
+  <br>
+  <button onclick="calculate()">Розрахувати</button>
+
+  <div class="result" id="output"></div>
+</div>
+
+<script>
+  function calculate() {
+    let vasyl = +document.getElementById("vasyl").value;
+    let petro = +document.getElementById("petro").value;
+    let daryna = +document.getElementById("daryna").value;
+
+    if (vasyl <= 0 || petro <= 0 || daryna <= 0 || isNaN(vasyl) || isNaN(petro) || isNaN(daryna)) {
+      alert("Будь ласка, введіть правильні зарплати для всіх співробітників.");
+      return;
+    }
+
+    let salaries = {
+      "Василь": vasyl,
+      "Петро": petro,
+      "Дарина": daryna
+    };
+
+    let sum = vasyl + petro + daryna;
+
+    let max = 0;
+    let maxName = "";
+
+    for (let name in salaries) {
+      if (salaries[name] > max) {
+        max = salaries[name];
+        maxName = name;
+      }
+    }
+
+    let output = `<p>Василь: ${vasyl} грн</p>
+                  <p>Петро: ${petro} грн</p>
+                  <p>Дарина: ${daryna} грн</p>
+                  <hr>
+                  <p><strong>Загальна сума зарплат: ${sum} грн</strong></p>
+                  <p><strong>Найвища зарплата у: ${maxName} - ${max} грн</strong></p>`;
+
+    document.getElementById("output").innerHTML = output;
+  }
+</script>
+
+</body>
+</html>

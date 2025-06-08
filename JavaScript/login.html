@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вхід</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #dff0fa, #ffffff);
+      color: #333;
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .wave, .circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .wave {
+      background: radial-gradient(circle, #3D7C98 20%, transparent 80%);
+      opacity: 0.4;
+    }
+
+    .wave.one { width: 600px; height: 600px; top: -200px; left: -300px; }
+    .wave.two { width: 500px; height: 500px; bottom: -200px; right: -250px; }
+
+    .circle { background: #B3E5FC; }
+
+    .circle.one { width: 150px; height: 150px; top: 80px; right: 50px; }
+    .circle.two { width: 100px; height: 100px; bottom: 120px; left: 40px; }
+    .circle.three { width: 120px; height: 120px; top: 30px; left: 45%; }
+    .circle.four { width: 90px; height: 90px; top: 60px; left: 40%; }
+    .circle.five { width: 110px; height: 110px; top: 90px; left: 50%; }
+
+    .container {
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h2 {
+      color: #3D7C98;
+      margin-bottom: 25px;
+      font-size: 26px;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #74C0FC;
+      border-radius: 10px;
+      width: 80%;
+      background: #e6f4ff;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #3D7C98;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background-color: #2f6076;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .secret-content {
+      margin-top: 20px;
+      font-size: 20px;
+      background: #E3F6FA;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(61,124,152,0.12);
+    }
+  </style>
+</head>
+<body>
+  <div class="wave one"></div>
+  <div class="wave two"></div>
+  <div class="circle one"></div>
+  <div class="circle two"></div>
+  <div class="circle three"></div>
+  <div class="circle four"></div>
+  <div class="circle five"></div>
+
+  <div class="container">
+    <h2>Введіть логін</h2>
+    <input type="text" id="login" placeholder="Логін">
+    <br>
+    <button onclick="checkLogin()">Далі</button>
+
+    <div id="passwordSection" class="hidden">
+      <input type="password" id="password" placeholder="Пароль">
+      <br>
+      <button onclick="checkPassword()">Увійти</button>
+    </div>
+
+    <div class="message" id="message"></div>
+    <div id="secret" class="secret-content hidden">
+      <b>Тут могла бути ваша реклама.</b>
+    </div>
+  </div>
+
+  <script>
+    function checkLogin() {
+      const login = document.getElementById("login").value.trim();
+      const message = document.getElementById("message");
+
+      if (login.toLowerCase() === "учень") {
+        document.getElementById("passwordSection").classList.remove("hidden");
+        message.textContent = "Логін правильний. Тепер введіть пароль.";
+      } else {
+        message.textContent = "Неправильний логін.";
+      }
+    }
+
+    function checkPassword() {
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("message");
+
+      if (password === "1234") {
+        message.innerHTML = "Пароль правильний!";
+        document.getElementById("secret").classList.remove("hidden");
+      } else {
+        message.textContent = "Неправильний пароль.";
+      }
+    }
+  </script>
+</body>
+</html>
